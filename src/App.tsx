@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { GlobalStyle } from './styles/GlobalStyle'
 
-import Greetings from './components/Greetings'
+import Menu from './components/Menu'
 
 const mainElement = document.createElement('div')
 mainElement.setAttribute('id', 'root')
@@ -12,7 +12,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Greetings />
+      <Menu />
     </>
   )
 }

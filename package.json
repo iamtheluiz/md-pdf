@@ -1,7 +1,7 @@
 {
-  "name": "electron-react-typescript",
-  "version": "1.0.0",
-  "description": "An Electron boilerplate including TypeScript, React, Jest and ESLint.",
+  "name": "md-pdf",
+  "version": "0.1.0",
+  "description": "Convert MD files to PDF",
   "main": "./dist/main.js",
   "scripts": {
     "dev": "npm-run-all -p dev:react electron:serve",
@@ -18,7 +18,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
+  "author": "iamtheluiz <iamtheluiz.dev@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -68,15 +68,13 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "md-pdf-cli": "^0.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^4.1.0",
     "styled-components": "^5.1.1"
   },
   "build": {
-    "appId": "your.id",
-    "mac": {
-      "category": "public.app-category.video"
-    },
     "directories": {
       "output": "packages"
     },

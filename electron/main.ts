@@ -9,10 +9,14 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1100,
     height: 700,
-    backgroundColor: '#191622',
+    minWidth: 1000,
+    backgroundColor: '#282a36',
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+      enableRemoteModule: true
+    },
+    frame: false,
+    title: 'MD PDF'
   })
 
   if (process.env.NODE_ENV === 'development') {
