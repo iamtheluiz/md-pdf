@@ -5,19 +5,21 @@ import { toast } from 'react-toastify'
 
 import { FaUpload, FaFileUpload, FaTimes, FaArrowRight, FaFolder } from 'react-icons/fa'
 import {
-  Container,
-  Content,
   DeleteContainer,
-  DialogButton,
   Footer,
-  FooterItem,
   IconContainer,
   Item,
   ItemContent,
-  ItemList,
-  Next,
-  Title
+  ItemList
 } from './styles'
+import {
+  Container,
+  Content,
+  Title,
+  LargeButton,
+  ButtonContainer,
+  Button
+} from '../../styles/GlobalComponents'
 
 import FilesContext, { File } from '../../context/files'
 
@@ -92,10 +94,10 @@ const Main: React.FC = () => {
     <Container>
       <Content>
         <Title>MD to PDF</Title>
-        <DialogButton onClick={handleOpenDialog}>
+        <LargeButton onClick={handleOpenDialog}>
           <FaUpload size={26} color="white" style={{ marginRight: 8 }} />
           Select Files
-        </DialogButton>
+        </LargeButton>
         <ItemList>
           {files.map(file => (
             <Item key={file.name}>
@@ -113,23 +115,24 @@ const Main: React.FC = () => {
         </ItemList>
         {files.length !== 0 && (
           <Footer>
-            <FooterItem style={{
+            <ButtonContainer style={{
               flexDirection: 'row-reverse'
             }}
             onClick={handleOutputDialog}
-            active={outputFolder !== ''}>
+            active={outputFolder !== ''}
+            >
               <span>
                 {outputFolder === '' ? 'Output Folder' : formatOutputPath(outputFolder)}</span>
-              <Next invert={true} style={{ backgroundColor: '#e29d52' }}>
+              <Button style={{ backgroundColor: '#e29d52' }}>
                 <FaFolder size={26} color="white" />
-              </Next>
-            </FooterItem>
-            <FooterItem active={outputFolder !== ''}>
+              </Button>
+            </ButtonContainer>
+            <ButtonContainer active={outputFolder !== ''}>
               <span>Next</span>
-              <Next invert={false}>
+              <Button disabled={outputFolder === ''}>
                 <FaArrowRight size={26} color="white" />
-              </Next>
-            </FooterItem>
+              </Button>
+            </ButtonContainer>
           </Footer>
         )}
       </Content>
