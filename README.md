@@ -43,7 +43,7 @@ npm run package
 
 ## Boilerplate
 
-* (diego3g/electron-typescript-react)[https://github.com/diego3g/electron-typescript-react]
+* [diego3g/electron-typescript-react](https://github.com/diego3g/electron-typescript-react)
 
 ## License
 
