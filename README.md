@@ -1,5 +1,10 @@
-## Electron + TypeScript + React
-Boilerplate for a project using Electron, React and Typescript
+# 📕 MD-PDF
+
+Electron application to convert MD files to PDF
+
+<center>
+  <img src="./docs/screenshot.png">
+</center>
 
 ## Installation
 

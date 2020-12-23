@@ -13,10 +13,12 @@ export const GlobalStyle = createGlobalStyle`
     color: #E1E1E6;
   }
 
+  /* Toastify Styles */
   .Toastify__toast-container {
     z-index: 9999;
     -webkit-transform: translate3d(0, 0, 9999px);
     position: fixed;
+    margin-top: 28px;
     padding: 4px;
     width: 320px;
     box-sizing: border-box;

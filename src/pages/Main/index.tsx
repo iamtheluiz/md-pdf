@@ -3,13 +3,14 @@ import { remote } from 'electron'
 import React, { useContext } from 'react'
 import { toast } from 'react-toastify'
 
-import { FaUpload, FaFileUpload, FaTimes, FaArrowRight } from 'react-icons/fa'
+import { FaUpload, FaFileUpload, FaTimes, FaArrowRight, FaFolder } from 'react-icons/fa'
 import {
   Container,
   Content,
   DeleteContainer,
   DialogButton,
   Footer,
+  FooterItem,
   IconContainer,
   Item,
   ItemContent,
@@ -21,7 +22,7 @@ import {
 import FilesContext, { File } from '../../context/files'
 
 const Main: React.FC = () => {
-  const { files, setFiles } = useContext(FilesContext)
+  const { files, setFiles, outputFolder, setOutputFolder } = useContext(FilesContext)
 
   function handleOpenDialog () {
     remote.dialog.showOpenDialog({
@@ -54,10 +55,33 @@ const Main: React.FC = () => {
     })
   }
 
+  function handleOutputDialog () {
+    remote.dialog.showOpenDialog({
+      properties: ['openDirectory']
+    }).then(response => {
+      const selectedFolder = response.filePaths[0]
+
+      setOutputFolder(selectedFolder)
+    })
+  }
+
   function removeFileFromList (absolutePath: string) {
+    const removedFile = files.filter(file => file.absolutePath === absolutePath)[0]
     const filteredFiles = files.filter(file => file.absolutePath !== absolutePath)
 
+    toast.success(`${removedFile.name} removed!`)
+
     setFiles(filteredFiles)
+  }
+
+  function formatOutputPath (path: string) {
+    const splitPath = path.split('\\')
+
+    if (splitPath.length > 3) {
+      path = `${splitPath[0]}/../${splitPath.reverse()[1]}/${splitPath[0]}`
+    }
+
+    return path
   }
 
   return (
@@ -85,10 +109,22 @@ const Main: React.FC = () => {
         </ItemList>
         {files.length !== 0 && (
           <Footer>
-            Next
-            <Next>
-              <FaArrowRight size={26} color="white" />
-            </Next>
+            <FooterItem style={{
+              flexDirection: 'row-reverse'
+            }}
+            active={outputFolder !== ''}>
+              <span>
+                {outputFolder === '' ? 'Output Folder' : formatOutputPath(outputFolder)}</span>
+              <Next invert={true} style={{ backgroundColor: '#e29d52' }} onClick={handleOutputDialog}>
+                <FaFolder size={26} color="white" />
+              </Next>
+            </FooterItem>
+            <FooterItem active={outputFolder !== ''}>
+              <span>Next</span>
+              <Next invert={false}>
+                <FaArrowRight size={26} color="white" />
+              </Next>
+            </FooterItem>
           </Footer>
         )}
       </Content>

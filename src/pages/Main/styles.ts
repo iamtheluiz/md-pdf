@@ -11,6 +11,7 @@ export const Container = styled.div`
 `
 export const Title = styled.h1`
   width: 100%;
+  margin-bottom: 8px;
   text-align: center;
   font-size: 52px;
   color: white;
@@ -39,7 +40,7 @@ export const DialogButton = styled.button`
 
 export const Content = styled.div`
   width: 100%;
-  max-width: 720px;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
 `
@@ -107,13 +108,37 @@ export const DeleteContainer = styled.button`
 export const Footer = styled.footer`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 48px;
   margin-top: 16px;
 `
-export const Next = styled.button`
+export const FooterItem = styled.div<{ active: boolean }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  border-radius: 8px;
+  background-color: #eeeeee;
+  color: #3a3a3a;
+
+  span {
+    padding: ${props => props.active ? '4px' : '2px'};
+    max-width: ${props => props.active ? '480px' : '0'};
+    overflow: hidden;
+    font-weight: 600;
+    transition: all 0.2s;
+    color: ${props => props.active ? 'inherit' : 'transparent'};
+  }
+  
+  &:hover span {
+    padding: 6px;
+    max-width: 480px;
+    color: inherit;
+  }
+`
+export const Next = styled.button<{invert: boolean}>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,13 +146,21 @@ export const Next = styled.button`
   height: 100%;
   width: 48px;
   border: 0px;
-  margin-left: 8px;
   border-radius: 8px;
   outline: none;
   cursor: pointer;
 
   svg {
     transition: all 0.2s;
+  }
+
+  &:hover {
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    filter: brightness(0.9);
   }
 
   &:active {
