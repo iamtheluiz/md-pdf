@@ -59,7 +59,11 @@ const Main: React.FC = () => {
     remote.dialog.showOpenDialog({
       properties: ['openDirectory']
     }).then(response => {
-      const selectedFolder = response.filePaths[0]
+      let selectedFolder = response.filePaths[0]
+
+      if (selectedFolder === undefined) {
+        selectedFolder = outputFolder
+      }
 
       setOutputFolder(selectedFolder)
     })
@@ -112,10 +116,11 @@ const Main: React.FC = () => {
             <FooterItem style={{
               flexDirection: 'row-reverse'
             }}
+            onClick={handleOutputDialog}
             active={outputFolder !== ''}>
               <span>
                 {outputFolder === '' ? 'Output Folder' : formatOutputPath(outputFolder)}</span>
-              <Next invert={true} style={{ backgroundColor: '#e29d52' }} onClick={handleOutputDialog}>
+              <Next invert={true} style={{ backgroundColor: '#e29d52' }}>
                 <FaFolder size={26} color="white" />
               </Next>
             </FooterItem>

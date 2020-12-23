@@ -6,7 +6,7 @@ Electron application to convert MD files to PDF
   <img src="./docs/screenshot.png">
 </center>
 
-## Installation
+## 🛠️ Installation
 
 Use a package manager of your choice (npm, yarn, etc.) in order to install all dependencies
 
@@ -45,6 +45,10 @@ npm run package
 
 * [diego3g/electron-typescript-react](https://github.com/diego3g/electron-typescript-react)
 
-## License
+## 💼 Authors
 
-[MIT](https://choosealicense.com/licenses/mit/)
+* **Luiz Gustavo** - *Development* - [iamtheluiz](https://github.com/iamtheluiz)
+
+## 📃 License
+
+This project is under the GNU License - see the [LICENSE](./LICENSE) file for details.

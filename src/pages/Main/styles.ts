@@ -122,6 +122,7 @@ export const FooterItem = styled.div<{ active: boolean }>`
   border-radius: 8px;
   background-color: #eeeeee;
   color: #3a3a3a;
+  cursor: pointer;
 
   span {
     padding: ${props => props.active ? '4px' : '2px'};
