@@ -1,6 +1,7 @@
 import path from 'path'
 import { remote } from 'electron'
 import React, { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { FaUpload, FaFileUpload, FaTimes, FaArrowRight, FaFolder } from 'react-icons/fa'
@@ -25,6 +26,7 @@ import FilesContext, { File } from '../../context/files'
 
 const Main: React.FC = () => {
   const { files, setFiles, outputFolder, setOutputFolder } = useContext(FilesContext)
+  const history = useHistory()
 
   function handleOpenDialog () {
     remote.dialog.showOpenDialog({
@@ -90,6 +92,10 @@ const Main: React.FC = () => {
     return path
   }
 
+  function handleNavigateToConvertPage () {
+    history.push('/convert')
+  }
+
   return (
     <Container>
       <Content>
@@ -127,7 +133,7 @@ const Main: React.FC = () => {
                 <FaFolder size={26} color="white" />
               </Button>
             </ButtonContainer>
-            <ButtonContainer active={outputFolder !== ''}>
+            <ButtonContainer active={outputFolder !== ''} onClick={handleNavigateToConvertPage}>
               <span>Next</span>
               <Button disabled={outputFolder === ''}>
                 <FaArrowRight size={26} color="white" />

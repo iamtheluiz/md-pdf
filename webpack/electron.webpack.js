@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const rootPath = path.resolve(__dirname, '..')
 
@@ -26,5 +27,15 @@ module.exports = {
   output: {
     path: path.resolve(rootPath, 'dist'),
     filename: '[name].js'
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '..', 'electron', 'styles'),
+          to: 'styles'
+        },
+      ]
+    })
+  ]
 }

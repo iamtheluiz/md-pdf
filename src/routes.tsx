@@ -1,19 +1,25 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from 'react-router-dom'
 
+import { FilesProvider } from './context/files'
+
 import Main from './pages/Main/'
+import Convert from './pages/Convert/'
 
 const Routes: React.FC = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={Main} />
-      </Switch>
-    </Router>
+    <FilesProvider>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/convert" exact component={Convert} />
+        </Switch>
+      </Router>
+    </FilesProvider>
   )
 }
 

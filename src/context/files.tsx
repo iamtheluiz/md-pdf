@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 export interface File {
-  name?: string;
-  ext?: string;
+  name: string;
+  ext: string;
   absolutePath: string;
 }
 

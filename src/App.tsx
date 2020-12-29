@@ -3,8 +3,6 @@ import { render } from 'react-dom'
 import { ToastContainer } from 'react-toastify'
 import { GlobalStyle } from './styles/GlobalStyle'
 
-import { FilesProvider } from './context/files'
-
 import Menu from './components/Menu'
 import Routes from './routes'
 
@@ -17,9 +15,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <Menu />
-      <FilesProvider>
-        <Routes />
-      </FilesProvider>
+      <Routes />
       <ToastContainer />
     </>
   )
