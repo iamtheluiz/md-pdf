@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { FaArrowLeft } from 'react-icons/fa'
-import { Document, Page, pdfjs } from 'react-pdf'
+import { pdfjs } from 'react-pdf'
 
 import path from 'path'
 
-import { ItemContainer, List, Loader } from './styles'
+import { FaArrowLeft, FaFilePdf } from 'react-icons/fa'
+import { List, Item, Loader } from './styles'
 import {
   Container,
   Content,
@@ -14,12 +14,12 @@ import {
   Title
 } from '../../styles/GlobalComponents'
 
-import FilesContext from '../../context/files'
+import FilesContext, { File } from '../../context/files'
 
 const Convert: React.FC = () => {
   pdfjs.GlobalWorkerOptions.workerSrc = 'js/pdf.worker.js'
   const { files, outputFolder } = useContext(FilesContext)
-  const [pdfs, setPdfs] = useState<Array<number>[]>([])
+  const [pdfs, setPdfs] = useState<File[]>([])
   const history = useHistory()
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Convert: React.FC = () => {
     }
 
     async function convertFiles () {
-      let pdfsArray: Array<number>[] = []
+      let pdfsArray: File[] = []
       for (const file of files) {
         const filePath = path.resolve(outputFolder, `${file.name.split('.')[0]}.pdf`)
 
@@ -38,7 +38,11 @@ const Convert: React.FC = () => {
           to: filePath
         })
 
-        pdfsArray = [...pdfsArray, pdf]
+        pdfsArray = [...pdfsArray, {
+          absolutePath: pdf,
+          ext: path.extname(file.name),
+          name: `${file.name.split('.')[0]}.pdf`
+        }]
 
         setPdfs(pdfsArray)
       }
@@ -53,12 +57,17 @@ const Convert: React.FC = () => {
     return (
       <>
         {items.map((item, index) => (
-          <ItemContainer key={index}>
-            <Loader>
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-            </Loader>
-          </ItemContainer>
+          <Item key={index}>
+            <header>
+              <Loader>
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+              </Loader>
+            </header>
+            <footer>
+              <span>Carregando...</span>
+            </footer>
+          </Item>
         ))}
       </>
     )
@@ -73,18 +82,15 @@ const Convert: React.FC = () => {
           Return to Main
         </LargeButton>
         <List>
-          {pdfs.map((pdf, index) => (
-            <ItemContainer key={index}>
-              {pdf !== null && (
-                <Document
-                  file={{
-                    data: pdf
-                  }}
-                >
-                  <Page pageNumber={1} />
-                </Document>
-              )}
-            </ItemContainer>
+          {pdfs.map(pdf => (
+            <Item key={pdf.absolutePath}>
+              <header>
+                <FaFilePdf size={52} color="#ea4335" />
+              </header>
+              <footer>
+                <span>{pdf.name}</span>
+              </footer>
+            </Item>
           ))}
           {renderLoadingItems(files.length - pdfs.length)}
         </List>

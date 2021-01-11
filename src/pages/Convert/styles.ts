@@ -8,28 +8,33 @@ export const List = styled.div`
   flex-direction: row;
   margin-top: 8px;
 `
-export const ItemContainer = styled.div`
+export const Item = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: calc((100%/4) - 8px);
-  height: 230px;
+  width: calc((100%/3) - 8px);
+  height: 156px;
   margin: 4px;
   background-color: white;
   cursor: pointer;
+  border: 1px solid #dadce0;
+  background-color: #fff;
+  border-radius: 6px;
 
-  canvas {
-    width: 100% !important;
-    height: auto !important;
+  header {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
   }
 
-  .react-pdf__Page__textContent {
-    display: none;
-  }
-
-  .react-pdf__Page__annotations {
-    display: none;
+  footer {
+    width: 100%;
+    padding: 13px 16px;
+    border-top: 1px solid #dadce0;
+    color: rgba(0,0,0,.72);
+    font-weight: bold;
   }
 `
 

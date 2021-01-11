@@ -51,7 +51,13 @@ ipcMain.handle('convertFileToPdf', async (event, { from, to }) => {
 
   fs.writeFileSync(to, new Uint8Array(pdf))
 
-  return (new Uint8Array(pdf))
+  return to
+})
+
+ipcMain.handle('getFileData', async (event, filePath) => {
+  const content = fs.readFileSync(filePath)
+
+  return new Uint8Array(content)
 })
 
 app.on('ready', createWindow)
