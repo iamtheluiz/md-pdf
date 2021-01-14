@@ -43,6 +43,10 @@ export const LargeButton = styled.button`
   &:active {
     filter: brightness(0.5);
   }
+  &:disabled, &:hover:disabled, &:active:disabled {
+    filter: grayscale(1) brightness(0.8);
+    cursor: not-allowed;
+  }
 `
 
 export const ButtonContainer = styled.div<{ active: boolean }>`

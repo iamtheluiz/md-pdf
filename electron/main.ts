@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import fs from 'fs'
 import * as path from 'path'
 import * as url from 'url'
@@ -58,6 +58,17 @@ ipcMain.handle('getFileData', async (event, filePath) => {
   const content = fs.readFileSync(filePath)
 
   return new Uint8Array(content)
+})
+
+ipcMain.handle('openFolder', async (event, folder) => {
+  try {
+    await shell.openItem(folder)
+
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
 })
 
 app.on('ready', createWindow)

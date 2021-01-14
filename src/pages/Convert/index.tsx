@@ -5,8 +5,8 @@ import { pdfjs } from 'react-pdf'
 
 import path from 'path'
 
-import { FaArrowLeft, FaFilePdf } from 'react-icons/fa'
-import { List, Item, Loader } from './styles'
+import { FaFolder, FaCheck, FaFilePdf } from 'react-icons/fa'
+import { List, Item, Loader, Footer } from './styles'
 import {
   Container,
   Content,
@@ -73,14 +73,16 @@ const Convert: React.FC = () => {
     )
   }
 
+  async function handleOpenOutputFolder () {
+    const response = await ipcRenderer.invoke('openFolder', outputFolder)
+
+    console.log(response)
+  }
+
   return (
     <Container>
       <Content>
         <Title>MD to PDF</Title>
-        <LargeButton onClick={() => history.push('/')}>
-          <FaArrowLeft size={26} color="white" style={{ marginRight: 8 }} />
-          Return to Main
-        </LargeButton>
         <List>
           {pdfs.map(pdf => (
             <Item key={pdf.absolutePath}>
@@ -94,6 +96,16 @@ const Convert: React.FC = () => {
           ))}
           {renderLoadingItems(files.length - pdfs.length)}
         </List>
+        <Footer>
+          <LargeButton onClick={handleOpenOutputFolder}>
+            <FaFolder size={26} color="white" style={{ marginRight: 8 }} />
+          Open Folder
+          </LargeButton>
+          <LargeButton disabled={files.length !== pdfs.length}>
+            <FaCheck size={26} color="white" style={{ marginRight: 8 }} />
+          Finish
+          </LargeButton>
+        </Footer>
       </Content>
     </Container>
   )

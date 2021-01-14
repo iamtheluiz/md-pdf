@@ -35,6 +35,11 @@ export const Item = styled.div`
     border-top: 1px solid #dadce0;
     color: rgba(0,0,0,.72);
     font-weight: bold;
+
+    // Ellipsis on big texts
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 `
 
@@ -71,5 +76,19 @@ export const Loader = styled.div`
   .bounce2 {
     -webkit-animation-delay: -1.0s;
     animation-delay: -1.0s;
+  }
+`
+
+export const Footer = styled.footer`
+  display: flex;
+  flex-direction: row;
+
+  button {
+    width: 50%;
+    margin: 5px;
+  }
+
+  button:nth-child(2) {
+    background-color: #5edd73;
   }
 `
