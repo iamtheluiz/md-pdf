@@ -74,9 +74,7 @@ const Convert: React.FC = () => {
   }
 
   async function handleOpenOutputFolder () {
-    const response = await ipcRenderer.invoke('openFolder', outputFolder)
-
-    console.log(response)
+    await ipcRenderer.invoke('openFolder', outputFolder)
   }
 
   return (
@@ -99,11 +97,11 @@ const Convert: React.FC = () => {
         <Footer>
           <LargeButton onClick={handleOpenOutputFolder}>
             <FaFolder size={26} color="white" style={{ marginRight: 8 }} />
-          Open Folder
+            Open Folder
           </LargeButton>
           <LargeButton disabled={files.length !== pdfs.length}>
             <FaCheck size={26} color="white" style={{ marginRight: 8 }} />
-          Finish
+            Finish
           </LargeButton>
         </Footer>
       </Content>
