@@ -1,18 +1,19 @@
-import { ipcRenderer } from 'electron'
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { pdfjs } from 'react-pdf'
 
 import path from 'path'
+import { ipcRenderer } from 'electron'
 
 import { FaFolder, FaCheck, FaFilePdf } from 'react-icons/fa'
-import { List, Item, Loader, Footer } from './styles'
+import { List, Loader, Footer } from './styles'
 import {
   Container,
   Content,
   LargeButton,
   Title
 } from '../../styles/GlobalComponents'
+import FileItem from '../../components/FileItem'
 
 import FilesContext, { File } from '../../context/files'
 
@@ -57,17 +58,12 @@ const Convert: React.FC = () => {
     return (
       <>
         {items.map((item, index) => (
-          <Item key={index}>
-            <header>
-              <Loader>
-                <div className="bounce1"></div>
-                <div className="bounce2"></div>
-              </Loader>
-            </header>
-            <footer>
-              <span>Carregando...</span>
-            </footer>
-          </Item>
+          <FileItem key={index} name="Loading...">
+            <Loader>
+              <div className="bounce1"></div>
+              <div className="bounce2"></div>
+            </Loader>
+          </FileItem>
         ))}
       </>
     )
@@ -83,14 +79,12 @@ const Convert: React.FC = () => {
         <Title>MD to PDF</Title>
         <List>
           {pdfs.map(pdf => (
-            <Item key={pdf.absolutePath}>
-              <header>
-                <FaFilePdf size={52} color="#ea4335" />
-              </header>
-              <footer>
-                <span>{pdf.name}</span>
-              </footer>
-            </Item>
+            <FileItem
+              key={pdf.absolutePath}
+              name={pdf.name}
+            >
+              <FaFilePdf size={52} color="#ea4335" />
+            </FileItem>
           ))}
           {renderLoadingItems(files.length - pdfs.length)}
         </List>

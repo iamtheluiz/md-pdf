@@ -8,40 +8,6 @@ export const List = styled.div`
   flex-direction: row;
   margin-top: 8px;
 `
-export const Item = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: calc((100%/3) - 8px);
-  height: 156px;
-  margin: 4px;
-  background-color: white;
-  cursor: pointer;
-  border: 1px solid #dadce0;
-  background-color: #fff;
-  border-radius: 6px;
-
-  header {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-  }
-
-  footer {
-    width: 100%;
-    padding: 13px 16px;
-    border-top: 1px solid #dadce0;
-    color: rgba(0,0,0,.72);
-    font-weight: bold;
-
-    // Ellipsis on big texts
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-`
 
 const bounce = keyframes`
   0%, 100% { 
