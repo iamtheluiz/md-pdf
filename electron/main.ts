@@ -1,13 +1,12 @@
 import 'regenerator-runtime/runtime'
 
-import { app, BrowserWindow, ipcMain, shell } from 'electron'
-import fs from 'fs'
+import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 
-import convertContentToHtml from './lib/convertContentToHtml'
-import createPdfFromHtml from './lib/createPdfFromHtml'
-import addStylesToHtmlString from './lib/addStylesToHtmlString'
+// Require remote modules
+import './events/file'
+import './events/folder'
 
 let mainWindow: Electron.BrowserWindow | null
 
@@ -41,35 +40,6 @@ function createWindow () {
     mainWindow = null
   })
 }
-
-ipcMain.handle('convertFileToPdf', async (event, { from, to }) => {
-  const content = fs.readFileSync(from)
-
-  let html = convertContentToHtml(content.toString())
-  html = addStylesToHtmlString(html)
-  const pdf = await createPdfFromHtml(html)
-
-  fs.writeFileSync(to, new Uint8Array(pdf))
-
-  return to
-})
-
-ipcMain.handle('getFileData', async (event, filePath) => {
-  const content = fs.readFileSync(filePath)
-
-  return new Uint8Array(content)
-})
-
-ipcMain.handle('openFolder', async (event, folder) => {
-  try {
-    await shell.openItem(folder)
-
-    return true
-  } catch (error) {
-    console.log(error)
-    return false
-  }
-})
 
 app.on('ready', createWindow)
 app.allowRendererProcessReuse = true
