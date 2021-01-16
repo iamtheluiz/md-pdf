@@ -22,7 +22,7 @@ import {
   Button
 } from '../../styles/GlobalComponents'
 
-import FilesContext, { File } from '../../context/files'
+import FilesContext, { File } from '../../contexts/files'
 
 const Main: React.FC = () => {
   const { files, setFiles, outputFolder, setOutputFolder } = useContext(FilesContext)

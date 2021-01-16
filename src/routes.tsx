@@ -5,7 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 
-import { FilesProvider } from './context/files'
+import { FilesProvider } from './contexts/files'
 
 import Main from './pages/Main/'
 import Convert from './pages/Convert/'

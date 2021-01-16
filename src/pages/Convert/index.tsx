@@ -15,7 +15,7 @@ import {
 } from '../../styles/GlobalComponents'
 import FileItem from '../../components/FileItem'
 
-import FilesContext, { File } from '../../context/files'
+import FilesContext, { File } from '../../contexts/files'
 
 const Convert: React.FC = () => {
   pdfjs.GlobalWorkerOptions.workerSrc = 'js/pdf.worker.js'

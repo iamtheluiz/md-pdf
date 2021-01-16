@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { FaTimes } from 'react-icons/fa'
 
-import FilesContext from '../../context/files'
+import FilesContext from '../../contexts/files'
 
 const Container = styled.div`
   position: absolute;
