@@ -8,8 +8,6 @@ export interface File {
 }
 
 interface FilesContext {
-  outputFolder: string;
-  setOutputFolder: (value: string) => void;
   files: File[];
   setFiles: (value: File[]) => void;
   selectedFile: File;
@@ -20,15 +18,12 @@ const FilesContext = React.createContext<FilesContext>({} as FilesContext)
 
 export const FilesProvider: React.FC = ({ children }) => {
   const [files, setFiles] = useState<File[]>([])
-  const [outputFolder, setOutputFolder] = useState<string>('')
   const [selectedFile, setSelectedFile] = useState<File>({} as File)
 
   return (
     <FilesContext.Provider value={{
       files,
       setFiles,
-      outputFolder,
-      setOutputFolder,
       selectedFile,
       setSelectedFile
     }}>

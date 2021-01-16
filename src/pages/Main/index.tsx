@@ -23,9 +23,11 @@ import {
 } from '../../styles/GlobalComponents'
 
 import FilesContext, { File } from '../../contexts/files'
+import OutputContext from '../../contexts/output'
 
 const Main: React.FC = () => {
-  const { files, setFiles, outputFolder, setOutputFolder } = useContext(FilesContext)
+  const { files, setFiles } = useContext(FilesContext)
+  const { outputFolder, setOutputFolder } = useContext(OutputContext)
   const history = useHistory()
 
   function handleOpenDialog () {

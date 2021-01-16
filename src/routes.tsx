@@ -5,21 +5,21 @@ import {
   Route
 } from 'react-router-dom'
 
-import { FilesProvider } from './contexts/files'
+import AppProvider from './contexts'
 
 import Main from './pages/Main/'
 import Convert from './pages/Convert/'
 
 const Routes: React.FC = () => {
   return (
-    <FilesProvider>
+    <AppProvider>
       <Router>
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/convert" exact component={Convert} />
         </Switch>
       </Router>
-    </FilesProvider>
+    </AppProvider>
   )
 }
 

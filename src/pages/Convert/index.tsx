@@ -16,10 +16,12 @@ import {
 import FileItem from '../../components/FileItem'
 
 import FilesContext, { File } from '../../contexts/files'
+import OutputContext from '../../contexts/output'
 
 const Convert: React.FC = () => {
   pdfjs.GlobalWorkerOptions.workerSrc = 'js/pdf.worker.js'
-  const { files, outputFolder } = useContext(FilesContext)
+  const { files } = useContext(FilesContext)
+  const { outputFolder } = useContext(OutputContext)
   const [pdfs, setPdfs] = useState<File[]>([])
   const history = useHistory()
 
