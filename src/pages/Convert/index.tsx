@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { pdfjs } from 'react-pdf'
 
 import path from 'path'
 import { ipcRenderer } from 'electron'
@@ -19,7 +18,6 @@ import FilesContext, { File } from '../../contexts/files'
 import OutputContext from '../../contexts/output'
 
 const Convert: React.FC = () => {
-  pdfjs.GlobalWorkerOptions.workerSrc = 'js/pdf.worker.js'
   const { files } = useContext(FilesContext)
   const { outputFolder } = useContext(OutputContext)
   const [pdfs, setPdfs] = useState<File[]>([])
@@ -33,6 +31,7 @@ const Convert: React.FC = () => {
 
     async function convertFiles () {
       let pdfsArray: File[] = []
+
       for (const file of files) {
         const filePath = path.resolve(outputFolder, `${file.name.split('.')[0]}.pdf`)
 
