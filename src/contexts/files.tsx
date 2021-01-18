@@ -15,7 +15,7 @@ interface FilesContext {
   setFiles: (value: File[]) => void;
   selectedFile: File;
   setSelectedFile: (value: File) => void;
-  addFileArray: (paths: string[]) => void;
+  addFilesToList: (paths: string[]) => void;
   removeFileFromList: (fileToRemove: File) => void;
 }
 
@@ -25,7 +25,7 @@ export const FilesProvider: React.FC = ({ children }) => {
   const [files, setFiles] = useState<File[]>([])
   const [selectedFile, setSelectedFile] = useState<File>({} as File)
 
-  const addFileArray = (paths: string[]) => {
+  const addFilesToList = (paths: string[]) => {
     const filesSanitized: File[] = [...files]
 
     paths.forEach(filePath => {
@@ -60,7 +60,7 @@ export const FilesProvider: React.FC = ({ children }) => {
       setFiles,
       selectedFile,
       setSelectedFile,
-      addFileArray,
+      addFilesToList,
       removeFileFromList
     }}>
       {children}

@@ -25,12 +25,12 @@ import FilesContext from '../../contexts/files'
 import OutputContext from '../../contexts/output'
 
 const Main: React.FC = () => {
-  const { files, addFileArray, removeFileFromList } = useContext(FilesContext)
+  const { files, addFilesToList, removeFileFromList } = useContext(FilesContext)
   const { outputFolder, setOutputFolder } = useContext(OutputContext)
   const history = useHistory()
 
-  function handleOpenDialog () {
-    remote.dialog.showOpenDialog({
+  async function handleOpenDialog () {
+    const response = await remote.dialog.showOpenDialog({
       properties: ['multiSelections'],
       filters: [
         {
@@ -38,25 +38,21 @@ const Main: React.FC = () => {
           name: 'Markdown'
         }
       ]
-    }).then(response => {
-      const filePaths = response.filePaths
-
-      addFileArray(filePaths)
     })
+
+    const filePaths = response.filePaths
+
+    addFilesToList(filePaths)
   }
 
-  function handleOutputDialog () {
-    remote.dialog.showOpenDialog({
+  async function handleOutputDialog () {
+    const dialogReturnValue = await remote.dialog.showOpenDialog({
       properties: ['openDirectory']
-    }).then(response => {
-      let selectedFolder = response.filePaths[0]
-
-      if (selectedFolder === undefined) {
-        selectedFolder = outputFolder
-      }
-
-      setOutputFolder(selectedFolder)
     })
+
+    const selectedFolder = dialogReturnValue.filePaths[0] || outputFolder
+
+    setOutputFolder(selectedFolder)
   }
 
   function handleNavigateToConvertPage () {
