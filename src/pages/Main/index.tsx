@@ -1,6 +1,7 @@
 import { remote } from 'electron'
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import formatOutputPath from '../../utils/formatOutputPath'
 
 import { FaUpload, FaFileUpload, FaTimes, FaArrowRight, FaFolder } from 'react-icons/fa'
 import {
@@ -56,16 +57,6 @@ const Main: React.FC = () => {
 
       setOutputFolder(selectedFolder)
     })
-  }
-
-  function formatOutputPath (path: string) {
-    const splitPath = path.split('\\')
-
-    if (splitPath.length > 3) {
-      path = `${splitPath[0]}/../${splitPath.reverse()[1]}/${splitPath[0]}`
-    }
-
-    return path
   }
 
   function handleNavigateToConvertPage () {
