@@ -1,8 +1,6 @@
-import path from 'path'
 import { remote } from 'electron'
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import { FaUpload, FaFileUpload, FaTimes, FaArrowRight, FaFolder } from 'react-icons/fa'
 import {
@@ -22,11 +20,11 @@ import {
   Button
 } from '../../styles/GlobalComponents'
 
-import FilesContext, { File } from '../../contexts/files'
+import FilesContext from '../../contexts/files'
 import OutputContext from '../../contexts/output'
 
 const Main: React.FC = () => {
-  const { files, setFiles } = useContext(FilesContext)
+  const { files, addFileArray, removeFileFromList } = useContext(FilesContext)
   const { outputFolder, setOutputFolder } = useContext(OutputContext)
   const history = useHistory()
 
@@ -41,23 +39,8 @@ const Main: React.FC = () => {
       ]
     }).then(response => {
       const filePaths = response.filePaths
-      const filesSanitized: File[] = [...files]
 
-      filePaths.forEach(filePath => {
-        const file = {
-          absolutePath: filePath,
-          name: path.basename(filePath),
-          ext: path.extname(path.basename(filePath))
-        }
-
-        if (!files.some(item => item.absolutePath === file.absolutePath)) {
-          filesSanitized.push(file)
-        } else {
-          toast.warn(`${file.name} already selected!`)
-        }
-      })
-
-      setFiles(filesSanitized)
+      addFileArray(filePaths)
     })
   }
 
@@ -73,15 +56,6 @@ const Main: React.FC = () => {
 
       setOutputFolder(selectedFolder)
     })
-  }
-
-  function removeFileFromList (absolutePath: string) {
-    const removedFile = files.filter(file => file.absolutePath === absolutePath)[0]
-    const filteredFiles = files.filter(file => file.absolutePath !== absolutePath)
-
-    toast.success(`${removedFile.name} removed!`)
-
-    setFiles(filteredFiles)
   }
 
   function formatOutputPath (path: string) {
@@ -115,7 +89,7 @@ const Main: React.FC = () => {
               <ItemContent>
                 {file.name}
               </ItemContent>
-              <DeleteContainer onClick={() => { removeFileFromList(file.absolutePath) }}>
+              <DeleteContainer onClick={() => { removeFileFromList(file) }}>
                 <FaTimes size={26} color="white" />
               </DeleteContainer>
             </Item>
