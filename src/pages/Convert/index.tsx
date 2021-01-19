@@ -21,6 +21,7 @@ const Convert: React.FC = () => {
   const { files } = useContext(FilesContext)
   const { outputFolder } = useContext(OutputContext)
   const [pdfs, setPdfs] = useState<File[]>([])
+  const [loadingItems, setLoadingItems] = useState<string[]>([])
   const history = useHistory()
 
   useEffect(() => {
@@ -53,22 +54,11 @@ const Convert: React.FC = () => {
     convertFiles()
   }, [])
 
-  function renderLoadingItems (length: number) {
-    const items = (new Array(length)).fill('-', 0)
+  useEffect(() => {
+    const loadingItemsCount = files.length - pdfs.length
 
-    return (
-      <>
-        {items.map((item, index) => (
-          <FileItem key={index} name="Loading...">
-            <Loader>
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-            </Loader>
-          </FileItem>
-        ))}
-      </>
-    )
-  }
+    setLoadingItems((new Array(loadingItemsCount)).fill('-', 0))
+  }, [pdfs])
 
   async function handleOpenOutputFolder () {
     await ipcRenderer.invoke('openFolder', outputFolder)
@@ -87,7 +77,14 @@ const Convert: React.FC = () => {
               <FaFilePdf size={52} color="#ea4335" />
             </FileItem>
           ))}
-          {renderLoadingItems(files.length - pdfs.length)}
+          {loadingItems.map((item, index) => (
+            <FileItem key={index} name="Loading...">
+              <Loader>
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+              </Loader>
+            </FileItem>
+          ))}
         </List>
         <Footer>
           <LargeButton onClick={handleOpenOutputFolder}>
