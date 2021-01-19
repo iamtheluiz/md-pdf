@@ -14,14 +14,13 @@ import {
 } from '../../styles/GlobalComponents'
 import FileItem from '../../components/FileItem'
 
-import FilesContext, { File } from '../../contexts/files'
+import FilesContext from '../../contexts/files'
 import OutputContext from '../../contexts/output'
 
 const Convert: React.FC = () => {
-  const { files } = useContext(FilesContext)
+  const [isConverted, setIsConverted] = useState(false)
+  const { files, setFileAsConverted } = useContext(FilesContext)
   const { outputFolder } = useContext(OutputContext)
-  const [pdfs, setPdfs] = useState<File[]>([])
-  const [loadingItems, setLoadingItems] = useState<string[]>([])
   const history = useHistory()
 
   useEffect(() => {
@@ -31,23 +30,15 @@ const Convert: React.FC = () => {
     }
 
     async function convertFiles () {
-      let pdfsArray: File[] = []
-
       for (const file of files) {
         const filePath = path.resolve(outputFolder, `${file.name.split('.')[0]}.pdf`)
 
-        const pdf = await ipcRenderer.invoke('convertFileToPdf', {
+        await ipcRenderer.invoke('convertFileToPdf', {
           from: file.absolutePath,
           to: filePath
         })
 
-        pdfsArray = [...pdfsArray, {
-          absolutePath: pdf,
-          ext: path.extname(file.name),
-          name: `${file.name.split('.')[0]}.pdf`
-        }]
-
-        setPdfs(pdfsArray)
+        setFileAsConverted(file)
       }
     }
 
@@ -55,10 +46,14 @@ const Convert: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    const loadingItemsCount = files.length - pdfs.length
+    if (files.length !== 0) {
+      const fileStatus = files.map(file => file.converted)
 
-    setLoadingItems((new Array(loadingItemsCount)).fill('-', 0))
-  }, [pdfs])
+      const status = fileStatus.reduce((previous, current) => !current ? false : previous)
+
+      setIsConverted(status)
+    }
+  }, [files])
 
   async function handleOpenOutputFolder () {
     await ipcRenderer.invoke('openFolder', outputFolder)
@@ -69,20 +64,19 @@ const Convert: React.FC = () => {
       <Content>
         <Title>MD to PDF</Title>
         <List>
-          {pdfs.map(pdf => (
+          {files.map(file => (
             <FileItem
-              key={pdf.absolutePath}
-              name={pdf.name}
+              key={file.absolutePath}
+              name={file.converted ? file.name : 'Loading...'}
             >
-              <FaFilePdf size={52} color="#ea4335" />
-            </FileItem>
-          ))}
-          {loadingItems.map((item, index) => (
-            <FileItem key={index} name="Loading...">
-              <Loader>
-                <div className="bounce1"></div>
-                <div className="bounce2"></div>
-              </Loader>
+              {file.converted ? (
+                <FaFilePdf size={52} color="#ea4335" />
+              ) : (
+                <Loader>
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                </Loader>
+              )}
             </FileItem>
           ))}
         </List>
@@ -91,7 +85,7 @@ const Convert: React.FC = () => {
             <FaFolder size={26} color="white" style={{ marginRight: 8 }} />
             Open Folder
           </LargeButton>
-          <LargeButton disabled={files.length !== pdfs.length}>
+          <LargeButton disabled={!isConverted}>
             <FaCheck size={26} color="white" style={{ marginRight: 8 }} />
             Finish
           </LargeButton>

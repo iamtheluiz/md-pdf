@@ -7,7 +7,7 @@ export interface File {
   name: string;
   ext: string;
   absolutePath: string;
-  content?: Array<number>[]
+  converted: boolean;
 }
 
 interface FilesContext {
@@ -17,6 +17,7 @@ interface FilesContext {
   setSelectedFile: (value: File) => void;
   addFilesToList: (paths: string[]) => void;
   removeFileFromList: (fileToRemove: File) => void;
+  setFileAsConverted: (file: File) => void;
 }
 
 const FilesContext = React.createContext<FilesContext>({} as FilesContext)
@@ -29,10 +30,11 @@ export const FilesProvider: React.FC = ({ children }) => {
     const filesSanitized: File[] = [...files]
 
     paths.forEach(filePath => {
-      const file = {
+      const file: File = {
         absolutePath: filePath,
         name: path.basename(filePath),
-        ext: path.extname(path.basename(filePath))
+        ext: path.extname(path.basename(filePath)),
+        converted: false
       }
 
       if (!files.some(item => item.absolutePath === file.absolutePath)) {
@@ -54,6 +56,14 @@ export const FilesProvider: React.FC = ({ children }) => {
     setFiles(filteredFiles)
   }
 
+  const setFileAsConverted = (file: File) => {
+    setFiles(previousState => previousState.map(
+      item => item.absolutePath === file.absolutePath
+        ? { ...item, converted: true }
+        : item
+    ))
+  }
+
   return (
     <FilesContext.Provider value={{
       files,
@@ -61,7 +71,8 @@ export const FilesProvider: React.FC = ({ children }) => {
       selectedFile,
       setSelectedFile,
       addFilesToList,
-      removeFileFromList
+      removeFileFromList,
+      setFileAsConverted
     }}>
       {children}
     </FilesContext.Provider>
