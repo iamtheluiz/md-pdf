@@ -12,13 +12,16 @@ import {
   LargeButton,
   Title
 } from '../../styles/GlobalComponents'
-import FileItem from '../../components/FileItem'
 
-import FilesContext from '../../contexts/files'
+import FileItem from '../../components/FileItem'
+import PdfView from '../../components/PdfView'
+
+import FilesContext, { File } from '../../contexts/files'
 import OutputContext from '../../contexts/output'
 
 const Convert: React.FC = () => {
   const [isConverted, setIsConverted] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File>({} as File)
   const { files, setFileAsConverted } = useContext(FilesContext)
   const { outputFolder } = useContext(OutputContext)
   const history = useHistory()
@@ -68,6 +71,7 @@ const Convert: React.FC = () => {
             <FileItem
               key={file.absolutePath}
               name={file.converted ? file.name : 'Loading...'}
+              onClick={file.converted ? () => setSelectedFile(file) : undefined}
             >
               {file.converted ? (
                 <FaFilePdf size={52} color="#ea4335" />
@@ -91,6 +95,9 @@ const Convert: React.FC = () => {
           </LargeButton>
         </Footer>
       </Content>
+      {selectedFile.absolutePath && (
+        <PdfView file={selectedFile} />
+      )}
     </Container>
   )
 }

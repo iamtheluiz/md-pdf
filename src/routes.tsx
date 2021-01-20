@@ -7,8 +7,8 @@ import {
 
 import AppProvider from './contexts'
 
-import Main from './pages/Main/'
-import Convert from './pages/Convert/'
+import Main from './screens/Main'
+import Convert from './screens/Convert'
 
 const Routes: React.FC = () => {
   return (
