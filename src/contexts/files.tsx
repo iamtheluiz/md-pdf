@@ -13,8 +13,8 @@ export interface File {
 interface FilesContext {
   files: File[];
   setFiles: (value: File[]) => void;
-  selectedFile: File;
-  setSelectedFile: (value: File) => void;
+  isConverted: boolean;
+  setIsConverted: (value: boolean) => void
   addFilesToList: (paths: string[]) => void;
   removeFileFromList: (fileToRemove: File) => void;
   setFileAsConverted: (file: File) => void;
@@ -24,7 +24,7 @@ const FilesContext = React.createContext<FilesContext>({} as FilesContext)
 
 export const FilesProvider: React.FC = ({ children }) => {
   const [files, setFiles] = useState<File[]>([])
-  const [selectedFile, setSelectedFile] = useState<File>({} as File)
+  const [isConverted, setIsConverted] = useState<boolean>(false)
 
   const addFilesToList = (paths: string[]) => {
     const filesSanitized: File[] = [...files]
@@ -68,8 +68,8 @@ export const FilesProvider: React.FC = ({ children }) => {
     <FilesContext.Provider value={{
       files,
       setFiles,
-      selectedFile,
-      setSelectedFile,
+      isConverted,
+      setIsConverted,
       addFilesToList,
       removeFileFromList,
       setFileAsConverted
