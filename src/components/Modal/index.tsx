@@ -8,15 +8,17 @@ import {
 
 interface ModalProps {
   open: boolean;
+  setOpen: (open: boolean) => void;
+  backgroundColor?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ open, children }) => {
+const Modal: React.FC<ModalProps> = ({ open, setOpen, backgroundColor, children }) => {
   return (
     <>
       {open && (
-        <Container>
+        <Container style={ backgroundColor ? { backgroundColor } : {}}>
           <Header>
-            <FiX fill="white" size={18} />
+            <FiX fill="black" size={24} onClick={() => setOpen(false)} />
           </Header>
           {children}
         </Container>

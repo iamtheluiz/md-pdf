@@ -4,11 +4,12 @@ import { Container, Header, Footer } from './styles'
 
 interface FileItemProps {
   name: string;
+  onClick?: () => void | undefined;
 }
 
-const FileItem: React.FC<FileItemProps> = ({ name, children }) => {
+const FileItem: React.FC<FileItemProps> = ({ name, children, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Header>
         {children}
       </Header>

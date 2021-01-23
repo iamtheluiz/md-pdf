@@ -12,9 +12,12 @@ import {
   Loader
 } from './styles'
 import FileItem from '../../components/FileItem'
+import PreviewContext from '../../contexts/preview'
+import PdfView from '../PdfView'
 
 const ConvertFileList: React.FC = () => {
   const { files, setFileAsConverted, setIsConverted } = useContext(FilesContext)
+  const { selectedFile, setSelectedFile } = useContext(PreviewContext)
   const { outputFolder } = useContext(OutputContext)
   const history = useHistory()
 
@@ -51,23 +54,27 @@ const ConvertFileList: React.FC = () => {
   }, [files])
 
   return (
-    <List>
-      {files.map(file => (
-        <FileItem
-          key={file.absolutePath}
-          name={file.converted ? file.name : 'Loading...'}
-        >
-          {file.converted ? (
-            <FaFilePdf size={52} color="#ea4335" />
-          ) : (
-            <Loader>
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-            </Loader>
-          )}
-        </FileItem>
-      ))}
-    </List>
+    <>
+      <PdfView file={selectedFile} setFile={setSelectedFile} />
+      <List>
+        {files.map(file => (
+          <FileItem
+            key={file.absolutePath}
+            name={file.converted ? file.name : 'Loading...'}
+            onClick={file.converted ? () => setSelectedFile(file) : undefined}
+          >
+            {file.converted ? (
+              <FaFilePdf size={52} color="#ea4335" />
+            ) : (
+              <Loader>
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+              </Loader>
+            )}
+          </FileItem>
+        ))}
+      </List>
+    </>
   )
 }
 

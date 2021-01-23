@@ -36,7 +36,7 @@
     "@types/puppeteer": "^5.4.2",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
-    "@types/react-pdf": "^5.0.0",
+    "@types/react-pdf": "^5.0.1",
     "@types/react-router-dom": "^5.1.6",
     "@types/remarkable": "^2.0.0",
     "@types/styled-components": "^5.1.0",

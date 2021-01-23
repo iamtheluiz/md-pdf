@@ -9,6 +9,7 @@ export const Container = styled.header`
   padding: 4px;
   background-color: #00000050;
   -webkit-app-region: no-drag;
+  z-index: 999999;
 `
 
 export const DragContainer = styled.div`
