@@ -7,6 +7,8 @@ export const List = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   margin-top: 8px;
+  max-height: 460px;
+  overflow: auto;
 `
 
 const bounce = keyframes`
