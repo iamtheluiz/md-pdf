@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { ipcRenderer } from 'electron'
+import { useHistory } from 'react-router-dom'
 
 import { FaFolder, FaCheck } from 'react-icons/fa'
 import { Footer } from './styles'
@@ -17,11 +18,19 @@ import OutputContext from '../../contexts/output'
 import { PreviewProvider } from '../../contexts/preview'
 
 const Convert: React.FC = () => {
-  const { isConverted } = useContext(FilesContext)
-  const { outputFolder } = useContext(OutputContext)
+  const { isConverted, resetFileContext } = useContext(FilesContext)
+  const { outputFolder, setOutputFolder } = useContext(OutputContext)
+  const history = useHistory()
 
   async function handleOpenOutputFolder () {
     await ipcRenderer.invoke('openFolder', outputFolder)
+  }
+
+  function resetApplication () {
+    setOutputFolder('')
+    resetFileContext()
+
+    history.push('/')
   }
 
   return (
@@ -35,7 +44,7 @@ const Convert: React.FC = () => {
               <FaFolder size={26} color="white" style={{ marginRight: 8 }} />
             Open Folder
             </LargeButton>
-            <LargeButton disabled={!isConverted}>
+            <LargeButton disabled={!isConverted} onClick={resetApplication}>
               <FaCheck size={26} color="white" style={{ marginRight: 8 }} />
             Finish
             </LargeButton>

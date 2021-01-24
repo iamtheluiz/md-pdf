@@ -14,8 +14,6 @@ export default async function createPdfFromHtml (html: string): Promise<ArrayBuf
   const template = hb.compile(html, { strict: true })
   const result = template({})
 
-  console.log(path.resolve(__dirname, '..', 'node_modules', 'puppeteer') + localChromium)
-
   const browser = await puppeteer.launch({
     executablePath: process.env.NODE_ENV === 'development' || __dirname.substr(__dirname.length - 5) === '\\dist'
       ? (path.resolve(__dirname, '..', 'node_modules', 'puppeteer') + localChromium).replace('\\app.asar\\', '\\app.asar.unpacked\\')

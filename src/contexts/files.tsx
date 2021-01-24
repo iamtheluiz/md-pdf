@@ -18,6 +18,7 @@ interface FilesContext {
   addFilesToList: (paths: string[]) => void;
   removeFileFromList: (fileToRemove: File) => void;
   setFileAsConverted: (file: File) => void;
+  resetFileContext: () => void;
 }
 
 const FilesContext = React.createContext<FilesContext>({} as FilesContext)
@@ -64,6 +65,11 @@ export const FilesProvider: React.FC = ({ children }) => {
     ))
   }
 
+  const resetFileContext = () => {
+    setFiles([])
+    setIsConverted(false)
+  }
+
   return (
     <FilesContext.Provider value={{
       files,
@@ -72,7 +78,8 @@ export const FilesProvider: React.FC = ({ children }) => {
       setIsConverted,
       addFilesToList,
       removeFileFromList,
-      setFileAsConverted
+      setFileAsConverted,
+      resetFileContext
     }}>
       {children}
     </FilesContext.Provider>
